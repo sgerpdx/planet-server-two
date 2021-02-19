@@ -13,17 +13,18 @@ async function run() {
     // run a query to create tables
     await client.query(` 
               CREATE TABLE users (
-                    id SERIAL PRIMARY KEY,
+                    id SERIAL PRIMARY KEY NOT NULL,
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
                 );         
                 CREATE TABLE planets (
-                    id INTEGER PRIMARY KEY NOT NULL,
+                    id SERIAL PRIMARY KEY NOT NULL,
                     planet VARCHAR(512) NOT NULL,
                     class VARCHAR(512) NOT NULL,
                     diameter INTEGER NOT NULL,
                     gravity DECIMAL NOT NULL,
-                    magnetic_field_strong BOOLEAN NOT NULL
+                    magnetic_field_strong BOOLEAN NOT NULL,
+                    owner_id INTEGER NOT NULL REFERENCES users(id)
             );
         `);
 

@@ -1,6 +1,6 @@
 const client = require('../lib/client');
 // import our seed data:
-const planets = require('./planets.js');
+const { planets } = require('./planets.js');
 const usersData = require('./users.js');
 const { getEmoji } = require('../lib/emoji.js');
 
@@ -27,10 +27,10 @@ async function run() {
     await Promise.all(
       planets.map(planet => {
         return client.query(`
-                    INSERT INTO planets (id, planet, class, diameter, gravity, magnetic_field_strong)
+                    INSERT INTO planets (planet, class, diameter, gravity, magnetic_field_strong, owner_id)
                     VALUES ($1, $2, $3, $4, $5, $6);
                 `,
-          [planet.id, planet.planet, planet.class, planet.diameter, planet.gravity, planet.magnetic_field_strong]);
+          [planet.planet, planet.class, planet.diameter, planet.gravity, planet.magnetic_field_strong, planet.owner_id]);
       })
     );
 
