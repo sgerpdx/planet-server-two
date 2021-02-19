@@ -57,7 +57,7 @@ describe('app routes', () => {
           "planet": "earth",
           "class": "terrestrial",
           "diameter": 12742,
-          "gravity": "1",
+          "gravity": "1.1",
           "magnetic_field_strong": true,
           "owner_id": 1
         },
@@ -88,5 +88,26 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expectation);
     });
+
+    test('returns a single planet by id', async () => {
+
+      const expectation = {
+        'id': 4,
+        'planet': 'mars',
+        'class': 'terrestrial',
+        'diameter': 6778,
+        'gravity': "0.4",
+        'magnetic_field_strong': false,
+        'owner_id': 1,
+      };
+
+      const data = await fakeRequest(app)
+        .get('/planets/4')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
+
   });
 });

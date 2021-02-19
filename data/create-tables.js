@@ -22,7 +22,7 @@ async function run() {
                     planet VARCHAR(512) NOT NULL,
                     class VARCHAR(512) NOT NULL,
                     diameter INTEGER NOT NULL,
-                    gravity DECIMAL NOT NULL,
+                    gravity VARCHAR(512) NOT NULL,
                     magnetic_field_strong BOOLEAN NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );
