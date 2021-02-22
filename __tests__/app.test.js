@@ -148,6 +148,35 @@ describe('app routes', () => {
     });
 
 
+    test('deletes a planet from the list by id', async () => {
+
+      const expectation = {
+        'id': 4,
+        'planet': 'mars',
+        'class': 'terrestrial',
+        'diameter': 6778,
+        'gravity': '0.4',
+        'magnetic_field_strong': false,
+        'owner_id': 1
+      };
+
+      const data = await fakeRequest(app)
+        .delete('/planets/4')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+
+      const emptySpace = await fakeRequest(app)
+        .get('/planets/4')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(emptySpace.body).toEqual('');
+
+    });
+
+
 
   });
 });
