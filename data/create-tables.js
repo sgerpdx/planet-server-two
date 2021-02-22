@@ -11,23 +11,26 @@ async function run() {
     await client.connect();
 
     // run a query to create tables
-    await client.query(`
-                CREATE TABLE users (
-                    id SERIAL PRIMARY KEY,
+    await client.query(` 
+              CREATE TABLE users (
+                    id SERIAL PRIMARY KEY NOT NULL,
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
-                );           
-                CREATE TABLE animals (
+                );         
+                CREATE TABLE planets (
                     id SERIAL PRIMARY KEY NOT NULL,
-                    name VARCHAR(512) NOT NULL,
-                    cool_factor INTEGER NOT NULL,
+                    planet VARCHAR(512) NOT NULL,
+                    class VARCHAR(512) NOT NULL,
+                    diameter INTEGER NOT NULL,
+                    gravity VARCHAR(512) NOT NULL,
+                    magnetic_field_strong BOOLEAN NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );
         `);
 
     console.log('create tables complete', getEmoji(), getEmoji(), getEmoji());
   }
-  catch(err) {
+  catch (err) {
     // problem? let's see the error...
     console.log(err);
   }
