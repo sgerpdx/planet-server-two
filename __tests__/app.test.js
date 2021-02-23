@@ -3,6 +3,7 @@ require('dotenv').config();
 const { execSync } = require('child_process');
 
 const fakeRequest = require('supertest');
+const { all } = require('../lib/app');
 const app = require('../lib/app');
 const client = require('../lib/client');
 
@@ -108,6 +109,104 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expectation);
     });
+
+
+    test('creates and inserts a new planet into our list of planets', async () => {
+
+      const newPlanet = {
+        'planet': 'saturn',
+        'class': 'gaseous',
+        'diameter': 116464,
+        'gravity': '1.1',
+        'magnetic_field_strong': true,
+        'owner_id': 1,
+      };
+
+      const expectedPlanet = {
+        ...newPlanet,
+        id: 6
+      };
+
+      const data = await fakeRequest(app)
+        .post('/planets')
+        .send(newPlanet)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectedPlanet);
+
+      const allPlanets = await fakeRequest(app)
+        .get('/planets')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      const saturn = allPlanets.body.find(planet => planet.planet === 'saturn');
+
+      expect(saturn).toEqual(expectedPlanet);
+
+    });
+
+
+    test('deletes a planet from the list by id', async () => {
+
+      const expectation = {
+        'id': 4,
+        'planet': 'mars',
+        'class': 'terrestrial',
+        'diameter': 6778,
+        'gravity': '0.4',
+        'magnetic_field_strong': false,
+        'owner_id': 1
+      };
+
+      const data = await fakeRequest(app)
+        .delete('/planets/4')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+
+      const emptySpace = await fakeRequest(app)
+        .get('/planets/4')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(emptySpace.body).toEqual('');
+
+    });
+
+
+    test('updates a planet object', async () => {
+
+      const newPlanet = {
+        'planet': 'futureEarth',
+        'class': 'terrestrial',
+        'diameter': 14400,
+        'gravity': '1.3',
+        'magnetic_field_strong': true,
+        'owner_id': 1,
+      };
+
+      const expectedPlanet = {
+        ...newPlanet,
+        id: 3
+      };
+
+      await fakeRequest(app)
+        .put('/planets/3')
+        .send(newPlanet)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      const updatedPlanet = await fakeRequest(app)
+        .get('/planets/3')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(updatedPlanet.body).toEqual(expectedPlanet);
+
+    });
+
 
   });
 });
