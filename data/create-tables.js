@@ -24,12 +24,11 @@ async function run() {
                 CREATE TABLE planets (
                     id SERIAL PRIMARY KEY NOT NULL,
                     planet VARCHAR(512) NOT NULL,
-                    class VARCHAR(512) NOT NULL,
                     diameter INTEGER NOT NULL,
                     gravity VARCHAR(512) NOT NULL,
                     magnetic_field_strong BOOLEAN NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id),
-                    type_id VARCHAR(512) NOT NULL REFERENCES classes(id)
+                    type_id INTEGER NOT NULL REFERENCES types(id)
             );
         `);
 

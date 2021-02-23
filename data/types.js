@@ -1,4 +1,4 @@
-const types = [
+const typesData = [
     {
         'name': 'terrestrial'
     },
@@ -8,5 +8,5 @@ const types = [
 ];
 
 module.exports = {
-    types
+    typesData
 };

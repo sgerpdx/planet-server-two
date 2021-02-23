@@ -6,7 +6,7 @@ const planets = [
         'gravity': '0.4',
         'magnetic_field_strong': false,
         'owner_id': 1,
-        'class_id': 1
+        'type_id': 1
     },
     {
         'id': 2,
@@ -15,7 +15,7 @@ const planets = [
         'gravity': '0.9',
         'magnetic_field_strong': false,
         'owner_id': 1,
-        'class_id': 1
+        'type_id': 1
     },
     {
         'id': 3,
@@ -24,7 +24,7 @@ const planets = [
         'gravity': '1.1',
         'magnetic_field_strong': true,
         'owner_id': 1,
-        'class_id': 1
+        'type_id': 1
     },
     {
         'id': 4,
@@ -33,7 +33,7 @@ const planets = [
         'gravity': '0.4',
         'magnetic_field_strong': false,
         'owner_id': 1,
-        'class_id': 1
+        'type_id': 1
     },
     {
         'id': 5,
@@ -42,7 +42,7 @@ const planets = [
         'gravity': '2.5',
         'magnetic_field_strong': true,
         'owner_id': 1,
-        'class_id': 2
+        'type_id': 2
     }
 ];
 

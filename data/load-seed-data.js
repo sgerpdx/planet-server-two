@@ -2,7 +2,7 @@ const client = require('../lib/client');
 // import our seed data:
 const { planets } = require('./planets.js');
 const usersData = require('./users.js');
-const typesData = require('./types.js');
+const { typesData } = require('./types.js');
 const { getEmoji } = require('../lib/emoji.js');
 
 run();
@@ -23,9 +23,7 @@ async function run() {
       })
     );
 
-    const user = users[0].rows[0];
-
-
+    console.log(typesData);
     const types = await Promise.all(
       typesData.map(type => {
         return client.query(`
@@ -37,8 +35,11 @@ async function run() {
       })
     )
 
+
     const type = types[0].rows[0];
 
+    //const types = responses.map(({ rows }) => rows[0]);
+    //this needs to be either planets, or whatever we're mapping thru to insert into the types table
 
 
     await Promise.all(
