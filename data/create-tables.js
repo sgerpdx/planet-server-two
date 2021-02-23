@@ -28,8 +28,8 @@ async function run() {
                     diameter INTEGER NOT NULL,
                     gravity VARCHAR(512) NOT NULL,
                     magnetic_field_strong BOOLEAN NOT NULL,
-                    class_id VARCHAR(512) NOT NULL REFERENCES classes(id),
-                    owner_id INTEGER NOT NULL REFERENCES users(id)
+                    owner_id INTEGER NOT NULL REFERENCES users(id),
+                    class_id VARCHAR(512) NOT NULL REFERENCES classes(id)
             );
         `);
 
