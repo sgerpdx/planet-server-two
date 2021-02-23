@@ -17,7 +17,7 @@ async function run() {
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
                 );     
-                CREATE TABLE classes (
+                CREATE TABLE types (
                     id SERIAL PRIMARY KEY NOT NULL,
                     name VARCHAR(512) NOT NULL
                 );    
@@ -29,7 +29,7 @@ async function run() {
                     gravity VARCHAR(512) NOT NULL,
                     magnetic_field_strong BOOLEAN NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id),
-                    class_id VARCHAR(512) NOT NULL REFERENCES classes(id)
+                    type_id VARCHAR(512) NOT NULL REFERENCES classes(id)
             );
         `);
 

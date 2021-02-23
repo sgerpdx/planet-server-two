@@ -1,4 +1,4 @@
-const classes = [
+const types = [
     {
         'name': 'terrestrial'
     },
@@ -8,5 +8,5 @@ const classes = [
 ];
 
 module.exports = {
-    classes
+    types
 };
