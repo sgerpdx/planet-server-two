@@ -114,7 +114,6 @@ describe('app routes', () => {
     test('creates and inserts a new planet into our list of planets', async () => {
 
       const newPlanet = {
-        'id': 6,
         'planet': 'saturn',
         'class': 'gaseous',
         'diameter': 116464,
@@ -141,9 +140,9 @@ describe('app routes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      const saturn = allPlanets.body.find(planet => planet.name === 'saturn');
+      const saturn = allPlanets.body.find(planet => planet.planet === 'saturn');
 
-      expect(newPlanet).toEqual(expectedPlanet);
+      expect(saturn).toEqual(expectedPlanet);
 
     });
 
@@ -176,6 +175,37 @@ describe('app routes', () => {
 
     });
 
+
+    test('updates a planet object', async () => {
+
+      const newPlanet = {
+        'planet': 'futureEarth',
+        'class': 'terrestrial',
+        'diameter': 14400,
+        'gravity': '1.3',
+        'magnetic_field_strong': true,
+        'owner_id': 1,
+      };
+
+      const expectedPlanet = {
+        ...newPlanet,
+        id: 3
+      };
+
+      await fakeRequest(app)
+        .put('/planets/3')
+        .send(newPlanet)
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      const updatedPlanet = await fakeRequest(app)
+        .get('/planets/3')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(updatedPlanet.body).toEqual(expectedPlanet);
+
+    });
 
 
   });
