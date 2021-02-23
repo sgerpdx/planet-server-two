@@ -44,10 +44,10 @@ async function run() {
     await Promise.all(
       planets.map(planet => {
         return client.query(`
-                    INSERT INTO planets (planet, class, diameter, gravity, magnetic_field_strong, owner_id)
+                    INSERT INTO planets (planet, diameter, gravity, magnetic_field_strong, owner_id, type_id)
                     VALUES ($1, $2, $3, $4, $5, $6);
                 `,
-          [planet.planet, planet.class, planet.diameter, planet.gravity, planet.magnetic_field_strong, planet.owner_id]);
+          [planet.planet, planet.diameter, planet.gravity, planet.magnetic_field_strong, planet.owner_id, planet.type_id]);
       })
     );
 
