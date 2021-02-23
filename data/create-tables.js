@@ -16,7 +16,11 @@ async function run() {
                     id SERIAL PRIMARY KEY NOT NULL,
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
-                );         
+                );     
+                CREATE TABLE classes (
+                    id SERIAL PRIMARY KEY NOT NULL,
+                    name VARCHAR(512) NOT NULL
+                );    
                 CREATE TABLE planets (
                     id SERIAL PRIMARY KEY NOT NULL,
                     planet VARCHAR(512) NOT NULL,
@@ -24,6 +28,7 @@ async function run() {
                     diameter INTEGER NOT NULL,
                     gravity VARCHAR(512) NOT NULL,
                     magnetic_field_strong BOOLEAN NOT NULL,
+                    class_id VARCHAR(512) NOT NULL REFERENCES classes(id),
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );
         `);
