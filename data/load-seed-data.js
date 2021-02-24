@@ -38,8 +38,7 @@ async function run() {
 
     const type = types[0].rows[0];
 
-    //const types = responses.map(({ rows }) => rows[0]);
-    //this needs to be either planets, or whatever we're mapping thru to insert into the types table
+
 
 
     await Promise.all(
