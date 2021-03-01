@@ -36,49 +36,54 @@ describe('app routes', () => {
 
       const expectation = [
         {
-          "id": 1,
-          "planet": "mercury",
-          "class": "terrestrial",
-          "diameter": 4880,
-          "gravity": "0.4",
-          "magnetic_field_strong": false,
-          "owner_id": 1
-        },
-        {
-          "id": 2,
-          "planet": "venus",
-          "class": "terrestrial",
-          "diameter": 12102,
-          "gravity": "0.9",
-          "magnetic_field_strong": false,
-          "owner_id": 1
+          'id': 4,
+          'planet': 'mars',
+          'planet_type': 'terrestrial',
+          'diameter': 6778,
+          'gravity': '0.4',
+          'magnetic_field_strong': false,
+          'owner_id': 1,
+          'type_id': 1
         },
         {
           "id": 3,
           "planet": "earth",
-          "class": "terrestrial",
+          "planet_type": "terrestrial",
           "diameter": 12742,
           "gravity": "1.1",
           "magnetic_field_strong": true,
-          "owner_id": 1
+          "owner_id": 1,
+          "type_id": 1
         },
         {
-          "id": 4,
-          "planet": "mars",
-          "class": "terrestrial",
-          "diameter": 6778,
+          "id": 2,
+          "planet": "venus",
+          "planet_type": "terrestrial",
+          "diameter": 12102,
+          "gravity": "0.9",
+          "magnetic_field_strong": false,
+          "owner_id": 1,
+          "type_id": 1
+        },
+        {
+          "id": 1,
+          "planet": "mercury",
+          "planet_type": "terrestrial",
+          "diameter": 4880,
           "gravity": "0.4",
           "magnetic_field_strong": false,
-          "owner_id": 1
+          "owner_id": 1,
+          "type_id": 1
         },
         {
           "id": 5,
           "planet": "jupiter",
-          "class": "gaseous",
+          "planet_type": "gaseous",
           "diameter": 139822,
           "gravity": "2.5",
           "magnetic_field_strong": true,
-          "owner_id": 1
+          "owner_id": 1,
+          "type_id": 2
         }
       ];
 
@@ -90,16 +95,42 @@ describe('app routes', () => {
       expect(data.body).toEqual(expectation);
     });
 
+
+    test('returns planet types', async () => {
+
+      const expectation = [
+        {
+          'id': 1,
+          'name': 'terrestrial'
+        },
+        {
+          'id': 2,
+          'name': 'gaseous'
+        }
+      ];
+
+      const data = await fakeRequest(app)
+        .get('/types')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
+
+
+
+
     test('returns a single planet by id', async () => {
 
       const expectation = {
         'id': 4,
         'planet': 'mars',
-        'class': 'terrestrial',
+        'planet_type': 'terrestrial',
         'diameter': 6778,
         'gravity': "0.4",
         'magnetic_field_strong': false,
         'owner_id': 1,
+        'type_id': 1
       };
 
       const data = await fakeRequest(app)
@@ -115,11 +146,11 @@ describe('app routes', () => {
 
       const newPlanet = {
         'planet': 'saturn',
-        'class': 'gaseous',
         'diameter': 116464,
         'gravity': '1.1',
         'magnetic_field_strong': true,
         'owner_id': 1,
+        'type_id': 2
       };
 
       const expectedPlanet = {
@@ -142,7 +173,7 @@ describe('app routes', () => {
 
       const saturn = allPlanets.body.find(planet => planet.planet === 'saturn');
 
-      expect(saturn).toEqual(expectedPlanet);
+      expect(saturn).toEqual({ ...expectedPlanet, planet_type: 'gaseous' });
 
     });
 
@@ -152,11 +183,11 @@ describe('app routes', () => {
       const expectation = {
         'id': 4,
         'planet': 'mars',
-        'class': 'terrestrial',
         'diameter': 6778,
         'gravity': '0.4',
         'magnetic_field_strong': false,
-        'owner_id': 1
+        'owner_id': 1,
+        'type_id': 1
       };
 
       const data = await fakeRequest(app)
@@ -180,11 +211,12 @@ describe('app routes', () => {
 
       const newPlanet = {
         'planet': 'futureEarth',
-        'class': 'terrestrial',
+        'planet_type': 'terrestrial',
         'diameter': 14400,
         'gravity': '1.3',
         'magnetic_field_strong': true,
         'owner_id': 1,
+        'type_id': 1
       };
 
       const expectedPlanet = {

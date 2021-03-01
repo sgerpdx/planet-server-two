@@ -2,6 +2,7 @@ const client = require('../lib/client');
 // import our seed data:
 const { planets } = require('./planets.js');
 const usersData = require('./users.js');
+const { typesData } = require('./types.js');
 const { getEmoji } = require('../lib/emoji.js');
 
 run();
@@ -22,15 +23,31 @@ async function run() {
       })
     );
 
-    const user = users[0].rows[0];
+    console.log(typesData);
+    const types = await Promise.all(
+      typesData.map(type => {
+        return client.query(`
+                      INSERT INTO types (name)
+                      VALUES ($1)
+                      RETURNING *;
+                  `,
+          [type.name]);
+      })
+    )
+
+
+    const type = types[0].rows[0];
+
+
+
 
     await Promise.all(
       planets.map(planet => {
         return client.query(`
-                    INSERT INTO planets (planet, class, diameter, gravity, magnetic_field_strong, owner_id)
+                    INSERT INTO planets (planet, diameter, gravity, magnetic_field_strong, owner_id, type_id)
                     VALUES ($1, $2, $3, $4, $5, $6);
                 `,
-          [planet.planet, planet.class, planet.diameter, planet.gravity, planet.magnetic_field_strong, planet.owner_id]);
+          [planet.planet, planet.diameter, planet.gravity, planet.magnetic_field_strong, planet.owner_id, planet.type_id]);
       })
     );
 
