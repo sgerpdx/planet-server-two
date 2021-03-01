@@ -95,6 +95,31 @@ describe('app routes', () => {
       expect(data.body).toEqual(expectation);
     });
 
+
+    test('returns planet types', async () => {
+
+      const expectation = [
+        {
+          'id': 1,
+          'name': 'terrestrial'
+        },
+        {
+          'id': 2,
+          'name': 'gaseous'
+        }
+      ];
+
+      const data = await fakeRequest(app)
+        .get('/types')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
+
+
+
+
     test('returns a single planet by id', async () => {
 
       const expectation = {
